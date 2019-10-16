@@ -23,3 +23,10 @@ linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read(
 # Importacao dos dados de Conversas
 conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
 
+# Criação de um dicionário para mapear cada linha com seu ID
+id_para_linha = {}
+for linha in linhas:
+    _linha = linha.split(' +++$+++ ')
+    if len(_linha) == 5:
+        #print(_linha)
+        id_para_linha[_linha[0]] = _linha[4]
