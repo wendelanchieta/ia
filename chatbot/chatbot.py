@@ -25,8 +25,21 @@ conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.
 
 # Criação de um dicionário para mapear cada linha com seu ID
 id_para_linha = {}
+
 for linha in linhas:
     _linha = linha.split(' +++$+++ ')
     if len(_linha) == 5:
         #print(_linha)
         id_para_linha[_linha[0]] = _linha[4]
+        
+# Criação de uma lista com todas as conversas
+conversas_id = []
+# -1 impede do laço for trazer o ultimo resultado
+for conversa in conversas[:-1]:
+    #print(conversa)
+    _conversa = conversa.split(' +++$+++ ')[-1][1:-1].replace("'","").replace(" ","")
+    #print(_conversa)
+    conversas_id.append(_conversa.split(','))
+    
+    
+       
