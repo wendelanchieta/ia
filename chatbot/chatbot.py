@@ -140,7 +140,7 @@ for palavra, contagem in palavras_contagem.items():
         respostas_palavras_int[palavra] = numero_palavra
         numero_palavra += 1
 
-
+# Adição de tokens no dicionário
 
 
 
