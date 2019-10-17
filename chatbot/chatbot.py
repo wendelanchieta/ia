@@ -18,12 +18,12 @@ import time
 # Pré-processamento dos dados
 
 # Importacao dos dados de linhas
-#linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
-linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
+linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
+#linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
 
 # Importacao dos dados de Conversas
-#conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
-conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
+conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
+#conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
 
 # Criação de um dicionário para mapear cada linha com seu ID
 # Olá! - Olá!
@@ -151,7 +151,8 @@ for token in tokens:
 for token in tokens:
     respostas_palavras_int[token] = len(respostas_palavras_int) + 1
 
-
+# Criação do dicionário inverso com o dicionário de respostas
+respostas_int_palavras = {p_i: p for p, p_i in respostas_palavras_int.items()}
 
 
 
