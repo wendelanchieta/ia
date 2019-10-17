@@ -93,7 +93,8 @@ def limpa_texto(texto):
     texto = re.sub(r"won ' t", "will not", texto)
     texto = re.sub(r"can't", "cannot", texto)
     texto = re.sub(r"can ' t", "cannot", texto)
-    texto = re.sub(r"[-()#/@;:<>~{}~+=.|,%¨]", "", texto)
+    texto = re.sub(r"don ' t", "don't", texto)
+    texto = re.sub(r"[-()#/@;:<>~{}~+=.|,%?¨]", "", texto)
     texto = re.sub(r"  ", " ", texto)
     return texto
 
@@ -107,10 +108,21 @@ respostas_limpas = []
 for resposta in respostas:
     respostas_limpas.append(limpa_texto(resposta))    
 
+# Criação de um dicionário que mapeia cada palavra e o número de ocorrências NLTK
+palavras_contagem = {}
+for pergunta in perguntas_limpas:
+    for palavra in pergunta.split():
+        if palavra not in palavras_contagem:
+            palavras_contagem[palavra] = 1
+        else:
+            palavras_contagem[palavra] += 1
 
-
-
-
+for resposta in respostas_limpas:
+    for palavra in resposta.split():
+        if palavra not in palavras_contagem:
+            palavras_contagem[palavra] = 1
+        else:
+            palavras_contagem[palavra] += 1
 
 
 
