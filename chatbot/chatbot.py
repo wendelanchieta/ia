@@ -18,12 +18,21 @@ import time
 # Pré-processamento dos dados
 
 # Importacao dos dados de linhas
-linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
+linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
 
 # Importacao dos dados de Conversas
-conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
+conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
 
 # Criação de um dicionário para mapear cada linha com seu ID
+# Olá! - Olá!
+# Tudo bem? - Tudo!
+# Eu também!
+
+# Olá! - Olá!
+# Olá! - Tudo bem?
+# Tudo bem? - Tudo
+# Tudo - Eu também!
+
 id_para_linha = {}
 
 for linha in linhas:
@@ -41,5 +50,56 @@ for conversa in conversas[:-1]:
     #print(_conversa)
     conversas_id.append(_conversa.split(','))
     
+# Separacao das perguntas e respostas
+# 194 - 195 - 196 - 197
+
+# 194 - 195
+# 195 - 196
+# 196 - 197
+
+perguntas = []
+respostas = []
+for conversa in conversas_id:
+    #print(conversa)
+    #print('******')
+    for i in range(len(conversa)-1):
+        #print(i)
+        perguntas.append(id_para_linha[conversa[i]])
+        respostas.append(id_para_linha[conversa[i+1]])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
+
+    
+
+
        
