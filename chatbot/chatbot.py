@@ -8,12 +8,14 @@ Created on Wed Oct 16 14:29:59 2019
 
 @author: wendel.anchieta
 """
-
 #!pip install tensorflow
 import numpy as np
-import tensorflow as tf
 import re
 import time
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
 
 # Pré-processamento dos dados
 
@@ -189,7 +191,19 @@ for tamanho in range(1,25 + 1):
             perguntas_limpas_ordenadas.append(perguntas_para_int[i[0]])
             respostas_limpas_ordenadas.append(respostas_para_int[i[0]])
 
-
+# Construção do modelo Seq2Seq
+# Criação de placeholders para as entradas e saidas
+# [64, 25]
+# olá <PAD> <PAD> <PAD> <PAD>
+# olá tudo bem <PAD> <PAD>
+# olá tudo bem e você 
+# [3, 5]            
+def entradas_modelo():
+    entradas = tf.placeholder(tf.int32, [None, None], name='entradas')
+    saidas = tf.placeholder(tf.int32, [None, None], name='saidas')           
+    lr = tf.placeholder(tf.float32, name='learning_rate')
+    keep_prob = tf.placeholder(tf.float32, name='keep_prob')
+    return entradas, saidas, lr, keep_prob
 
 
 
