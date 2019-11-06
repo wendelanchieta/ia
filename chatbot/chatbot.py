@@ -20,12 +20,12 @@ tf.disable_v2_behavior()
 # Pré-processamento dos dados
 
 # Importacao dos dados de linhas
-linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
-#linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
+#linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
+linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
 
 # Importacao dos dados de Conversas
-conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
-#conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
+#conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
+conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
 
 # Criação de um dicionário para mapear cada linha com seu ID
 # Olá! - Olá!
@@ -205,6 +205,15 @@ def entradas_modelo():
     keep_prob = tf.placeholder(tf.float32, name='keep_prob')
     return entradas, saidas, lr, keep_prob
 
+# Pré-processamento das saidas (alvos)
+# [batch_size, 1] = [64, 1] 
+# 0 - SOS (8830)
+# 1 - SOS (8830)   
+def preprocessamento_saidas(saidas, palavra_para_int, batch_size):
+    esquerda = tf.fill([batch_size,1], palavra_para_int['<SOS>'])
+    direita = tf.strided_slice(saidas, [0,0], [batch_size, -1], strides = [1,1])
+    saidas_preprocessadas = tf.concat([esquerda,direita], 1)
+    return saidas_preprocessadas
 
 
 
