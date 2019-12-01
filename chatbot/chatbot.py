@@ -364,7 +364,8 @@ probabilidade_dropout = 0.5
 tf.reset_default_graph()
 session = tf.InteractiveSession()
 
-
+# Carregamento do modelo
+entradas, saidas, lr, keep_prob = entradas_modelo()
     
     
     
