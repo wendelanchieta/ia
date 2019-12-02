@@ -223,7 +223,7 @@ def rnn_codificador(rnn_entradas, rnn_tamanho, numero_camadas, keep_prob, tamanh
     encoder_celula = tf.contrib.rnn.MultiRNNCell([lstm_dropout] * numero_camadas)
     _, encoder_estado = tf.nn.bidirectional_dynamic_rnn(cell_fw = encoder_celula,
                                                      cell_bw = encoder_celula,
-                                                     sequence_lenght = tamanho_sequencia,
+                                                     sequence_length = tamanho_sequencia,
                                                      inputs = rnn_entradas,
                                                      dtype = tf.float32)
     return encoder_estado
@@ -373,4 +373,30 @@ tamanho_sequencia = tf.placeholder_with_default(25, None, name = 'tamanho_sequen
 # Obtenção das dimensões dos tensores de entrada
 dimensao_entrada = tf.shape(entradas)    
     
+# Obtenção das previsões de treinamento e teste
+previsoes_treinamento, privisoes_teste = modelo_seq2seq(tf.reverse(entradas, [-1]),
+                                                        saidas, 
+                                                        keep_prob,
+                                                        batch_size,
+                                                        tamanho_sequencia,
+                                                        len(respostas_palavras_int),
+                                                        len(perguntas_palavras_int),
+                                                        tamanho_codificador_embeddings,
+                                                        tamanho_decodificador_embeddings,
+                                                        rnn_tamanho,
+                                                        numero_camadas,
+                                                        perguntas_palavras_int)
+
+
+
+
+
+
+
+
+
+
+
+
+
     
