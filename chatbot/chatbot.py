@@ -336,7 +336,7 @@ def modelo_seq2seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
                                                                      tamanho_decodificador_embeddings],0, 1))
     decodificador_embedded_entradas =  tf.nn.embedding_lookup(decodificador_embeddings_matrix,
                                                               saidas_preprocessadas)
-    previsoes_treinamento, privisoes_teste = rnn_decodificador(decodificador_embedded_entrada,
+    previsoes_treinamento, privisoes_teste = rnn_decodificador(decodificador_embedded_entradas,
                                                                decodificador_embeddings_matrix,
                                                                codificador_estado,
                                                                numero_palavras_perguntas,
@@ -370,6 +370,7 @@ entradas, saidas, lr, keep_prob = entradas_modelo()
 # Configuração do tamanho da sequência    
 tamanho_sequencia = tf.placeholder_with_default(25, None, name = 'tamanho_sequencia')
     
-    
+# Obtenção das dimensões dos tensores de entrada
+dimensao_entrada = tf.shape(entradas)    
     
     
