@@ -414,10 +414,15 @@ def aplica_padding(batch_textos, palavra_para_int):
     tamanho_maximo = max([len(texto) for texto in batch_textos])
     return [texto + [palavra_para_int['<PAD>']] * (tamanho_maximo - len(texto)) for texto in batch_textos]
 
-
-
-
-
+# Divisão dos dados em batches de perguntas e respostas
+def divide_batches(perguntas, respostas, batch_size):
+    for indice_batch in range(0, len(perguntas) // batch_size):   
+        indice_inicio = indice_batch * batch_size
+        perguntas_no_batch = perguntas[indice_inicio:indice_inicio + batch_size]
+        respostas_no_batch = respostas[indice_inicio:indice_inicio + batch_size]
+        perguntas_no_batch_padded = aplica_padding(perguntas_no_batch, perguntas_palavras_int) 
+        respostas_no_batch_padded = aplica_padding(respostas_no_batch, respostas_palavras_int) 
+        yield perguntas_no_batch_padded, respostas_no_batch_padded
 
 
     
