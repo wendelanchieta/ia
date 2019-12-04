@@ -8,25 +8,33 @@ Created on Wed Oct 16 14:29:59 2019
 
 @author: wendel.anchieta
 """
-#!pip install tensorflow
+#!pip install tensorflow==1.0
+import sys
+
 import numpy as np
 import re
 import time
-#import tensorflow as tf
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 
-tf.disable_v2_behavior()
+tf.VERSION
+print("Python version")
+print (sys.version)
+print("Version info.")
+print (sys.version_info)
+#import tensorflow.compat.v1 as tf
+
+#tf.disable_v2_behavior()
 
 # Pré-processamento dos dados
 
 # Importacao dos dados de linhas
 #linhas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-lines.txt', encoding='utf-8', errors='ignore').read().split('\n')
-#linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
-linhas = open('C:/ambdes/ProjetosGit/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
+linhas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
+#linhas = open('C:/ambdes/ProjetosGit/ia/chatbot/recursos/movie-lines.txt').read().split('\n')
 # Importacao dos dados de Conversas
 #conversas = open('/home/wendel/ambdes/projetosgit/ia/chatbot/recursos/movie-conversations.txt', encoding='utf-8', errors='ignore').read().split('\n')
-#conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
-conversas = open('C:/ambdes/ProjetosGit/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
+conversas = open('E:/ambdes/ProjetosGIT/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
+#conversas = open('C:/ambdes/ProjetosGit/ia/chatbot/recursos/movie-conversations.txt').read().split('\n')
 # Criação de um dicionário para mapear cada linha com seu ID
 # Olá! - Olá!
 # Tudo bem? - Tudo!
@@ -296,6 +304,7 @@ def rnn_decodificador(decodificador_embedded_entrada, decodificador_embeddings_m
                                                                    weights_initializer = pesos,
                                                                    biases_initializer = biases)
         previsoes_treinamento = decodifica_base_treinamento(codificador_estado,
+                                                            decodificador_celula,
                                                             decodificador_embedded_entrada,
                                                             tamanho_sequencia,
                                                             decodificador_escopo,
@@ -340,6 +349,7 @@ def modelo_seq2seq(entradas, saidas, keep_prob, batch_size, tamanho_sequencia,
                                                                decodificador_embeddings_matrix,
                                                                codificador_estado,
                                                                numero_palavras_perguntas,
+                                                               tamanho_sequencia,
                                                                rnn_tamanho, 
                                                                numero_camadas,
                                                                perguntas_palavras_int,
@@ -387,7 +397,14 @@ previsoes_treinamento, privisoes_teste = modelo_seq2seq(tf.reverse(entradas, [-1
                                                         numero_camadas,
                                                         perguntas_palavras_int)
 
-
+# Loss function (erro), otimizador e gradient clipping
+with tf.name_scope("otimizacao"):
+    erro = tf.contrib.seq2seq.sequence_loss(previsoes_treinamento, saidas,
+                                            tf.ones([dimensao_entrada[0], tamanho_sequencia]))
+    otimizador = tf.train.AdamOptimizer(learning_rate)
+    gradients = otimizador.compute_gradients(erro)
+    clipped_gradients = [(tf.clip_by_value(grad_tensor,-5.0,5.0), grad_variable) for grad_tensor, grad_variable in gradients if grad_tensor is not None]
+    otimizador_clipping = otimizador.apply_gradients(clipped_gradients)
 
 
 
