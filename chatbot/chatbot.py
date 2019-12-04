@@ -424,5 +424,32 @@ def divide_batches(perguntas, respostas, batch_size):
         respostas_no_batch_padded = aplica_padding(respostas_no_batch, respostas_palavras_int) 
         yield perguntas_no_batch_padded, respostas_no_batch_padded
 
+# Divisão das perguntas e respostas em base de treinamento e teste/validação
+indice_base_validacao = int(len(perguntas_limpas_ordenadas) * 0.15)        
 
-    
+perguntas_treinamento = perguntas_limpas_ordenadas[indice_base_validacao:] 
+respostas_treinamento = respostas_limpas_ordenadas[indice_base_validacao:]   
+
+perguntas_validacao = perguntas_limpas_ordenadas[:indice_base_validacao]
+respostas_validacao = respostas_limpas_ordenadas[:indice_base_validacao]  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
