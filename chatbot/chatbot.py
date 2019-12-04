@@ -406,9 +406,13 @@ with tf.name_scope("otimizacao"):
     clipped_gradients = [(tf.clip_by_value(grad_tensor,-5.0,5.0), grad_variable) for grad_tensor, grad_variable in gradients if grad_tensor is not None]
     otimizador_clipping = otimizador.apply_gradients(clipped_gradients)
 
-
-
-
+# Padding
+# olá <PAD> <PAD> <PAD> <PAD>
+# olá tudo bem <PAD> <PAD>
+# olá tudo bem e você
+def aplica_padding(batch_textos, palavra_para_int):
+    tamanho_maximo = max([len(texto) for texto in batch_textos])
+    return [texto + [palavra_para_int['<PAD>']] * (tamanho_maximo - len(texto)) for texto in batch_textos]
 
 
 
