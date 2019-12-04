@@ -11,3 +11,5 @@ Chatbot implementado com o modelo <strong>Seq2Seq</strong> de <strong>Processame
 * Treinamento do Modelo Seq2Seq
 
 * Otimização do chatbot
+
+`Obs: este código foi desenvolvido com a V1 do Tensorflow`
