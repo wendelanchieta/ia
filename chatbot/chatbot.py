@@ -433,19 +433,51 @@ respostas_treinamento = respostas_limpas_ordenadas[indice_base_validacao:]
 perguntas_validacao = perguntas_limpas_ordenadas[:indice_base_validacao]
 respostas_validacao = respostas_limpas_ordenadas[:indice_base_validacao]  
 
+# Treinamento
+batch_indice_checagem = 100
+batch_indice_checagem_treinamento = (len(perguntas_treinamento) // batch_size // 2) - 1
+erro_total_treinamento = 0
+lista_validacao_erro = []
+early_stopping_checagem = 0
+early_stopping_parada = 1000
+checkpoint = chatbot_pesos.ckpt"
+session.run(tf.global_variables_initializer())
+for epoca in range(1, epocas + 1):
+	for indice_batch, (perguntas_no_batch_padded, respostas_no_batch_padded) in enumerate(divide_batches(perguntas_treinamento, respostas_treinamento, batch_size))
+		tempo_inicio = time.time()
+		_, erro_treinamento_batch = session.run([otimizador_clipping, erro], feed_dict = {entradas: perguntas_no_batch_padded,
+												saidas: respostas_no_batch_padded,
+												lr: learning_rate,
+												tamanho_sequencia: respostas_no_batch_padded.shape[1],
+												keep_prob: probabilidade_dropout})
+		
+		erro_total_treinamento += erro_treinamento_batch
+		tempo_final = time.time()
+		tempo_batch = tempo_final - tempo_inicio
+		if indice_batch % batch_indice_checagem_treinamento == 0:
+			print('Época: {:>3}/{}, Batch: {:>4}/{}, Erro treinamento: {:>6.3f}, Tempo treinamento em 100 batches: {:d} segundos'.format(epoca,
+					epocas,
+					indice_batch,
+					len(perguntas_treinamento) // batch_size,
+					erro_total_treinamento / batch_indice_checagem_treinamento,
+					int(tempo_batch * batch_indice_checagem_treinamento)))
+			erro_total_treinamento = 0		
+		
+		if indice_batch % batch_indice_checagem_validacao == 0 and indice_batch > 0 :
+			erro_total_validacao = 0
+			tempo_inicio = time.time()
+			for indice_batch_validacao, (perguntas_no_batch_padded, respostas_no_batch_padded) in enumerate(divide_batches(perguntas_validacao, respostas_validacao, batch_size))
+				erro_batch_validacao = session.run(erro, feed_dict = {entradas: perguntas_no_batch_padded,
+														saidas: respostas_no_batch_padded,
+														lr: learning_rate,
+														tamanho_sequencia: respostas_no_batch_padded.shape[1],
+														keep_prob: 1})
 
-
-
-
-
-
-
-
-
-
-
-
-
+				erro_total_validacao += erro_batch_validacao
+			tempo_final = time.time()
+			tempo_batch = tempo_final - tempo_inicio
+			media_erro_validacao = erro_total_validacao / (len(perguntas_validacao) / batch_size)
+			print('Erro validacao: {:>6.3f}, Tempo validacao batch: {:d} segundos'.format(media_erro_validacao, int(tempo_batch)))
 
 
 
