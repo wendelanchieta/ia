@@ -489,8 +489,14 @@ for epoca in range(1, epocas + 1):
         break   
 print('Final de execução')             
 
+# ---- Parte 4 -- Testes com o modelo Seq2Seq ----
 
-
+# Carregamento dos pesos e executando a seção
+checkpoint = "./chatbot_pesos.ckpt"
+session = tf.InteractiveSession()
+session.run(tf.global_variables_initializer())
+saver = tf.train.Saver()
+saver.restore(session, checkpoint)
 
 
   
