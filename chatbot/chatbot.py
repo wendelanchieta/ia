@@ -498,5 +498,24 @@ session.run(tf.global_variables_initializer())
 saver = tf.train.Saver()
 saver.restore(session, checkpoint)
 
+# Conversão de questões de string para inteiros
+def converte_string_para_int(pergunta, palavra_para_int):
+    pergunta = limpa_texto(pergunta)
+    return [palavra_para_int.get(palavra, palavra_para_int['<OUT>']) for palavra in pergunta.split()]
+
+converte_string_para_int("i'm a robot", perguntas_palavras_int)
+
+    
+
+
+
+
+
+
+
+
+
+
+
 
   
