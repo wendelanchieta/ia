@@ -1,7 +1,12 @@
 .idea/
 __pycache__/
+data/SEI_MCTI - 12882967 - Edital.pdf
+data/SEI_MCTI - 13084103 - Edital.pdf
+data/SEI_MCTI - 13408090 - Edital.pdf
+
 # ignores all .md files
 .md
 
 # does not ignore the README.md file
 !README.md
+
